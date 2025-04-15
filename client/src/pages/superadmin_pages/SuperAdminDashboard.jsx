@@ -192,6 +192,34 @@ const SuperadminDashboard = () => {
                   path: `/profile/${userId}`,
                 },
                 {
+                  label: "Add Hospital",
+                  icon: <FaUserPlus className="text-yellow-500" />,
+                  path: "/add-hospital",
+                },
+                {
+                  label: "Add Doctor",
+                  icon: <FaUserPlus className="text-yellow-700" />,
+                  path: "/add-doctor",
+                },
+
+                {
+                  label: "Add Patient",
+                  icon: <FaUserPlus className="text-yellow-900" />,
+                  path: "/add-patient",
+                },
+
+                {
+                  label: "Add Treatment",
+                  icon: <FaUserPlus className="text-yellow-300" />,
+                  path: "/add-treatment",
+                },
+
+                {
+                  label: "Add Blood",
+                  icon: <FaBoxOpen className="text-green-800" />,
+                  path: "/add-blood",
+                },
+                {
                   label: "Add Category",
                   icon: <FaPlus className="text-orange-500" />,
                   path: "/add-category",
@@ -210,11 +238,6 @@ const SuperadminDashboard = () => {
                   label: "Add Outlet",
                   icon: <FaBuilding className="text-orange-500" />,
                   path: "/add-outlet",
-                },
-                {
-                  label: "Add Employee",
-                  icon: <FaUserPlus className="text-teal-600" />,
-                  path: "/add-employee",
                 },
                 {
                   label: "Add Blog",

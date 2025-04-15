@@ -1,24 +1,20 @@
 const express = require("express");
-
-
-const  router = express.Router();
-
-const Treatment = require("../models/TreatmentModel");
-
+const router = express.Router();
 
 const {
-    createTreatment,viewAllTreatments,viewTreatmentById ,deleteTreatment, updateTreatment,countAllTreatments
-} = require("../controllers/TreatmentController")
+  createTreatment,
+  viewAllTreatments,
+  viewTreatmentById,
+  deleteTreatment,
+  updateTreatment,
+  countAllTreatments,
+} = require("../controllers/TreatmentController");
 
-
-
-router.post("/create-treatment",createTreatment);
-router.get("/view-all-treatments",viewAllTreatments);
-router.get("/view-treatment-by-id",viewTreatmentById);
-router.delete("/delete-treatment",deleteTreatment);
-router.put("/update-Treatment",updateTreatment);
-router.get("/count-all-Treatment",countAllTreatments);
-
+router.post("/create-treatment", createTreatment);
+router.get("/view-all-treatments", viewAllTreatments);
+router.get("/view-treatment-by-id/:id", viewTreatmentById);
+router.delete("/delete-treatment/:id", deleteTreatment);
+router.put("/update-Treatment/:id", updateTreatment);
+router.get("/count-all-Treatment", countAllTreatments);
 
 module.exports = router;
-

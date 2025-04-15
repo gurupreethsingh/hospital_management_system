@@ -51,6 +51,33 @@ import AllReplies from "../../pages/contact_pages/AllReplies";
 // subscription page.
 import Subscriptions from "../../pages/subscription_pages/Subscriptions";
 
+// hospital routes.
+import AddHospital from "../../pages/hospital_pages/AddHHospital";
+import AllHospitals from "../../pages/hospital_pages/AllHospitals";
+import SingleHospital from "../../pages/hospital_pages/SingleHospital";
+import UpdateHospital from "../../pages/hospital_pages/UpdateHospital";
+
+// doctor pages.
+import AddDoctor from "../../pages/doctor_pages/AddDoctor";
+import AllDoctors from "../../pages/doctor_pages/AllDoctors";
+import SingleDoctor from "../../pages/doctor_pages/SingleDoctor";
+import UpdateDoctor from "../../pages/doctor_pages/UpdateDoctor";
+
+// blood pages.
+import AddBlood from "../../pages/blood_pages/AddBlood";
+import AllBloods from "../../pages/blood_pages/AllBloods";
+import SingleBlood from "../../pages/blood_pages/SingleBlood";
+import UpdateBlood from "../../pages/blood_pages/UpdateBlood";
+
+// treatement pages
+import AddTreatment from "../../pages/treatment_pages/AddTreatment";
+import AllTreatments from "../../pages/treatment_pages/AllTreatments";
+import SingleTreatment from "../../pages/treatment_pages/SingleTreatment";
+import UpdateTreatment from "../../pages/treatment_pages/UpdateTreatment";
+
+// patient pages.
+import AddPatient from "../../pages/patient_pages/AddPatient";
+
 const MainLayout = () => {
   return (
     <div className="min-h-screen text-gray-900">
@@ -466,6 +493,198 @@ const MainLayout = () => {
               <PrivateRoute allowedRoles={["superadmin"]}>
                 <PageTitle title="All Subscriptions">
                   <Subscriptions />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* hospital routes */}
+          <Route
+            path="/add-hospital"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Add Hospital">
+                  <AddHospital />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-hospitals"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="all-hospitals">
+                  <AllHospitals />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-hospital/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Hospital">
+                  <SingleHospital />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-hospital/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Hospital">
+                  <UpdateHospital />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* hospital routes */}
+          <Route
+            path="/add-doctor"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Add Doctor">
+                  <AddDoctor />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-doctors"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="all-doctors">
+                  <AllDoctors />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-doctor/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Doctor">
+                  <SingleDoctor />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-doctor/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Doctor">
+                  <UpdateDoctor />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* blood routes */}
+          <Route
+            path="/add-blood"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Add Blood">
+                  <AddBlood />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-bloods"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="all-bloods">
+                  <AllBloods />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-blood/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Blood">
+                  <SingleBlood />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-blood/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Blood">
+                  <UpdateBlood />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* treatment routes */}
+          <Route
+            path="/add-treatment"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Add Treatment">
+                  <AddTreatment />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-treatments"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="all-treatments">
+                  <AllTreatments />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-treatment/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Treatment">
+                  <SingleTreatment />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-treatment/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Treatment">
+                  <UpdateTreatment />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* treatment routes */}
+          <Route
+            path="/add-patient"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Add Patient">
+                  <AddPatient />
                 </PageTitle>
               </PrivateRoute>
             }
