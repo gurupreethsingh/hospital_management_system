@@ -10,6 +10,7 @@ const fs = require("fs");
 const bcrypt = require("bcrypt");
 
 // import all the routes.
+const activityRoutes = require("./routes/ActivityRoutes");
 const userRoutes = require("./routes/UserRoutes");
 const categoryRoutes = require("./routes/CategoryRoutes");
 const outletRoutes = require("./routes/OutletRoutes");
@@ -40,6 +41,7 @@ app.use(bodyParser.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use("/api", activityRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api", contactRoutes);
