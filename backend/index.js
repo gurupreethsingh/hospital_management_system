@@ -18,6 +18,10 @@ const entityCountRoutes = require("./routes/EntityCountRoutes");
 const contactRoutes = require("./routes/ContactRoutes");
 const blogRoutes = require("./routes/BlogRoutes");
 const subscriptionRoutes = require("./routes/SubscriptionRoutes");
+const patientRoutes=require("./routes/PatientRoutes");
+const medicineRoutes=require("./routes/MedicineRoutes");
+const doctorRoutes=require("./routes/doctorRoutes");
+const bloodRoutes=require("./routes/BloodRoutes");
 
 dotenv.config();
 
@@ -44,6 +48,10 @@ app.use("/api", vendorRoutes);
 app.use("/api", entityCountRoutes);
 app.use("/api", blogRoutes);
 app.use("/api", subscriptionRoutes);
+app.use("/api", doctorRoutes);
+app.use("/api", patientRoutes);
+app.use("/api", medicineRoutes);
+app.use("/api", bloodRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -65,7 +73,7 @@ mongoose
   });
 
 // create the port number to run the application
-const PORT = process.env.PORT;
+const PORT = process.env.PORT||3010;
 app.listen(PORT, () => {
   console.log(`Server is running successfully at port number ${PORT}`);
 });
