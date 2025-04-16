@@ -1,21 +1,36 @@
 const TreatmentModel = require("../models/TreatmentModel")
 
 
-const createTreatment = async (req,res) =>{
-    try{
-    const {treatment_name, description,cost} = req.body;
-    
-    await TreatmentModel.create({
-        treatment_name, 
-        description,
-        cost,
-    });
-    res.status(201).json({ message: "Treatment details added successfully" });
+const createTreatment = async (req, res) => {
+  try {
+    const {
+      treatment_name,
+      description,
+      cost,
+      treatment_date,
+      patient_id,
+      doctor_id,
+      hospital_id
+    } = req.body;
 
-    } catch (error) {
-        console.error("Treatment details Creation Error:", error.message);
-        res.status(500).json({ message: "Server error" });
-    }
+    console.log("📥 Incoming Treatment Payload:", req.body);
+
+    // Mongoose will automatically validate these fields
+    await TreatmentModel.create({
+      treatment_name,
+      description,
+      cost,
+      treatment_date,
+      patient_id,
+      doctor_id,
+      hospital_id
+    });
+
+    res.status(201).json({ message: "Treatment details added successfully" });
+  } catch (error) {
+    console.error("❌ Treatment details Creation Error:", error.message);
+    res.status(500).json({ message: error.message });
+  }
 };
 
 
@@ -58,21 +73,30 @@ const updateTreatment = async (req, res) => {
     const {
       treatment_name,
       description,
-      cost
+      cost,
+      treatment_date,
+      patient_id,
+      doctor_id,
+      hospital_id,
     } = req.body;
 
+    const treatment = await TreatmentModel.findById(req.params.id);
+    if (!treatment) {
+      return res.status(404).json({ message: "Treatment not found" });
+    }
 
-    const singleTreatment = await TreatmentModel.findById(req.params.id);
-    if (!singleTreatment) return res.status(404).json({ message: "Treatment details not found" });
+    if (treatment_name) treatment.treatment_name = treatment_name;
+    if (description) treatment.description = description;
+    if (cost !== undefined) treatment.cost = cost;
+    if (treatment_date) treatment.treatment_date = treatment_date;
+    if (patient_id) treatment.patient_id = patient_id;
+    if (doctor_id) treatment.doctor_id = doctor_id;
+    if (hospital_id) treatment.hospital_id = hospital_id;
 
-    if(treatment_name) singleTreatment.treatment_name = treatment_name;
-    if(description) singleTreatment.description = description;
-    
-    await singleTreatment.save();
-    res.status(200).json(singleTreatment);
-
-} catch (error) {
-    console.error("Error updating Treatment:", error.message);
+    await treatment.save();
+    res.status(200).json(treatment);
+  } catch (error) {
+    console.error("Error updating treatment:", error.message);
     res.status(500).json({ message: "Server error" });
   }
 };

@@ -25,7 +25,7 @@ const createPatients= async (req,res) => {
 
 const getAllPatients = async (req, res) => {
   try {
-    const allPatients = await MedicineModel.find();
+    const allPatients = await PatientModel.find();
     if(!allPatients) return res.status(400).json({message : "Patients details not found."})
     res.status(200).json(allPatients);
   } catch (err) {
@@ -47,7 +47,7 @@ const viewPatientById = async (req, res) => {
 
 const deletePatient = async (req, res) => {
     try {
-      const patient = await PatientModelModel.findByIdAndDelete(req.params.id);
+      const patient = await PatientModel.findByIdAndDelete(req.params.id);
       if (!patient) return res.status(404).json({ message: "Patient not found" })
       res.status(200).json({ message: "Patient deleted successfully" });
     } catch (err) {

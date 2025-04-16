@@ -17,8 +17,10 @@ export default function UpdateTreatment() {
   const [formData, setFormData] = useState({
     treatment_name: "",
     patient_name: "",
-    diagnosis: "",
-    treatment_cost: "",
+    doctor_name: "",
+    hospital_name: "",
+    description: "",
+    cost: "",
     treatment_date: "",
   });
 
@@ -80,17 +82,17 @@ export default function UpdateTreatment() {
         )}
         {renderField(
           "Patient Name",
-          "patient_name",
+          "patient_id",
           <FaUserInjured className="text-blue-600" />
         )}
         {renderField(
           "Diagnosis",
-          "diagnosis",
+          "description",
           <FaNotesMedical className="text-indigo-600" />
         )}
         {renderField(
           "Treatment Cost",
-          "treatment_cost",
+          "cost",
           <FaMoneyBillWave className="text-yellow-600" />,
           "number"
         )}

@@ -78,6 +78,9 @@ import UpdateTreatment from "../../pages/treatment_pages/UpdateTreatment";
 // patient pages.
 import AddPatient from "../../pages/patient_pages/AddPatient";
 
+// discharge pages. 
+import AddDischarge from "../../pages/discharge_pages/AddDischarge";
+
 const MainLayout = () => {
   return (
     <div className="min-h-screen text-gray-900">
@@ -685,6 +688,18 @@ const MainLayout = () => {
               <PrivateRoute allowedRoles={["superadmin"]}>
                 <PageTitle title="Add Patient">
                   <AddPatient />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+
+<Route
+            path="/add-discharge"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "admin", "doctor"]}>
+                <PageTitle title="Add Discharge">
+                  <AddDischarge />
                 </PageTitle>
               </PrivateRoute>
             }

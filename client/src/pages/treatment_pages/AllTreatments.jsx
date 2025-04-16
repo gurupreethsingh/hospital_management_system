@@ -27,7 +27,7 @@ const AllTreatments = () => {
     const fetchTreatments = async () => {
       try {
         const res = await axios.get(
-          `${globalBackendRoute}/api/get-all-treatments`
+          `${globalBackendRoute}/api/view-all-treatments`
         );
         setTreatments(res.data);
         setTotalCount(res.data.length);
@@ -136,13 +136,16 @@ const AllTreatments = () => {
                     {t.treatment_name}
                   </h3>
                   <p className="paragraphTextMobile flex items-center gap-2">
-                    <FaUserInjured /> {t.patient_name}
+                    <FaUserInjured /> {t.patient_id}
                   </p>
                   <p className="paragraphTextMobile flex items-center gap-2">
-                    <FaNotesMedical /> {t.diagnosis}
+                    <FaNotesMedical /> {t.description}
                   </p>
                   <p className="paragraphTextMobile flex items-center gap-2">
-                    <FaMoneyBillWave /> ₹{t.treatment_cost}
+                    <FaMoneyBillWave /> ₹{t.cost}
+                  </p>
+                  <p className="paragraphTextMobile flex items-center gap-2">
+                    <FaMoneyBillWave /> ₹{t.treatment_date}
                   </p>
                   <button
                     onClick={(e) => handleDeleteTreatment(t._id, e)}

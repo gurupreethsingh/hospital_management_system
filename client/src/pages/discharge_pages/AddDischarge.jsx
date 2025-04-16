@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
-  FaStethoscope,
   FaUserInjured,
-  FaNotesMedical,
-  FaMoneyBillWave,
+  FaHospital,
   FaCalendarAlt,
+  FaClipboardList,
+  FaFileMedicalAlt,
+  FaUserMd,
 } from "react-icons/fa";
 import { MdSave } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import globalBackendRoute from "../../config/Config";
 
-const AddTreatment = () => {
-  const [allpatients, setAllPatients] = useState([]);
+const AddDischarge = () => {
+  const [allPatients, setAllPatients] = useState([]);
   const [allHospitals, setAllHospitals] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
   const navigate = useNavigate();
 
-  const [treatment, setTreatment] = useState({
-    treatment_name: "",
-    hospital_id: "",
-    doctor_id: "",
+  const [discharge, setDischarge] = useState({
+    patient_name: "",
     patient_id: "",
-    description: "",
-    cost: "",
-    treatment_date: "",
+    hospital_id: "",
+    discharge_date: "",
+    reason_for_discharge: "",
+    treatment_summary: "",
+    doctor_name: "",
   });
 
   useEffect(() => {
     const fetchAllData = async () => {
       try {
-        const [patientsRes, doctorsRes, hospitalsRes] = await Promise.all([
+        const [patientsRes, hospitalsRes, doctorsRes] = await Promise.all([
           axios.get(`${globalBackendRoute}/api/get-all-patients`),
-          axios.get(`${globalBackendRoute}/api/view-all-doctors`),
           axios.get(`${globalBackendRoute}/api/view-all-hospitals`),
+          axios.get(`${globalBackendRoute}/api/view-all-doctors`),
         ]);
         setAllPatients(patientsRes.data);
-        setAllDoctors(doctorsRes.data);
         setAllHospitals(hospitalsRes.data);
+        setAllDoctors(doctorsRes.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -47,37 +48,35 @@ const AddTreatment = () => {
   }, []);
 
   const handleChange = (e) => {
-    setTreatment({ ...treatment, [e.target.name]: e.target.value });
+    setDischarge({ ...discharge, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("🚀 Treatment payload submitting to backend:", treatment);
-
-    const required = ["hospital_id", "doctor_id", "patient_id"];
-    const missing = required.filter((key) => !treatment[key]);
+    const required = ["patient_id", "hospital_id"];
+    const missing = required.filter((key) => !discharge[key]);
     if (missing.length > 0) {
       alert("Missing required fields: " + missing.join(", "));
       return;
     }
 
     try {
-      await axios.post(`${globalBackendRoute}/api/create-treatment`, treatment);
-      alert("Treatment record added successfully!");
-      setTreatment({
-        treatment_name: "",
-        hospital_id: "",
-        doctor_id: "",
+      await axios.post(`${globalBackendRoute}/api/create-discharge`, discharge);
+      alert("Discharge record added successfully!");
+      setDischarge({
+        patient_name: "",
         patient_id: "",
-        description: "",
-        cost: "",
-        treatment_date: "",
+        hospital_id: "",
+        discharge_date: "",
+        reason_for_discharge: "",
+        treatment_summary: "",
+        doctor_name: "",
       });
-      navigate("/all-treatments");
+      navigate("/all-discharges");
     } catch (error) {
-      console.error("❌ Error adding treatment:", error);
-      alert("There was an issue adding the treatment.");
+      console.error("❌ Error adding discharge:", error);
+      alert("There was an issue adding the discharge record.");
     }
   };
 
@@ -90,7 +89,7 @@ const AddTreatment = () => {
       <input
         type={type}
         name={name}
-        value={treatment[name]}
+        value={discharge[name]}
         onChange={handleChange}
         required
         className="formInput w-full sm:w-2/3"
@@ -103,21 +102,15 @@ const AddTreatment = () => {
     <div className="bg-white py-10">
       <div className="compactWidth">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h2 className="headingText">Add New Treatment</h2>
-          <Link to="/all-treatments">
+          <h2 className="headingText">Add Discharge Details</h2>
+          <Link to="/all-discharges">
             <button className="fileUploadBtn text-sm py-1 px-3">
-              View All Treatments
+              View All Discharges
             </button>
           </Link>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {renderInput(
-            "Treatment Name",
-            "treatment_name",
-            <FaStethoscope className="text-green-500" />
-          )}
-
           {/* Patient Dropdown */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
             <label className="formLabel w-full sm:w-1/3 flex items-center">
@@ -126,37 +119,15 @@ const AddTreatment = () => {
             </label>
             <select
               name="patient_id"
-              value={treatment.patient_id}
+              value={discharge.patient_id}
               onChange={handleChange}
               required
               className="formInput w-full sm:w-2/3"
             >
               <option value="">Select patient</option>
-              {allpatients.map((patient) => (
+              {allPatients.map((patient) => (
                 <option key={patient._id} value={patient._id}>
                   {patient.patient_name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Doctor Dropdown */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-            <label className="formLabel w-full sm:w-1/3 flex items-center">
-              <FaUserInjured className="text-blue-500" />
-              <span className="ml-2">Doctor</span>
-            </label>
-            <select
-              name="doctor_id"
-              value={treatment.doctor_id}
-              onChange={handleChange}
-              required
-              className="formInput w-full sm:w-2/3"
-            >
-              <option value="">Select doctor</option>
-              {allDoctors.map((doctor) => (
-                <option key={doctor._id} value={doctor._id}>
-                  {doctor.doctor_name}
                 </option>
               ))}
             </select>
@@ -165,12 +136,12 @@ const AddTreatment = () => {
           {/* Hospital Dropdown */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
             <label className="formLabel w-full sm:w-1/3 flex items-center">
-              <FaUserInjured className="text-blue-500" />
+              <FaHospital className="text-red-500" />
               <span className="ml-2">Hospital</span>
             </label>
             <select
               name="hospital_id"
-              value={treatment.hospital_id}
+              value={discharge.hospital_id}
               onChange={handleChange}
               required
               className="formInput w-full sm:w-2/3"
@@ -184,23 +155,49 @@ const AddTreatment = () => {
             </select>
           </div>
 
+          {/* Discharge Date */}
           {renderInput(
-            "Description",
-            "description",
-            <FaNotesMedical className="text-indigo-500" />
-          )}
-          {renderInput(
-            "Cost",
-            "cost",
-            <FaMoneyBillWave className="text-yellow-500" />,
-            "number"
-          )}
-          {renderInput(
-            "Date",
-            "treatment_date",
+            "Discharge Date",
+            "discharge_date",
             <FaCalendarAlt className="text-purple-500" />,
             "date"
           )}
+
+          {/* Reason for Discharge */}
+          {renderInput(
+            "Reason for Discharge",
+            "reason_for_discharge",
+            <FaClipboardList className="text-indigo-500" />
+          )}
+
+          {/* Treatment Summary */}
+          {renderInput(
+            "Treatment Summary",
+            "treatment_summary",
+            <FaFileMedicalAlt className="text-yellow-500" />
+          )}
+
+          {/* Doctor Dropdown (was input before) */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+            <label className="formLabel w-full sm:w-1/3 flex items-center">
+              <FaUserMd className="text-green-500" />
+              <span className="ml-2">Doctor</span>
+            </label>
+            <select
+              name="doctor_name"
+              value={discharge.doctor_name}
+              onChange={handleChange}
+              required
+              className="formInput w-full sm:w-2/3"
+            >
+              <option value="">Select doctor</option>
+              {allDoctors.map((doc) => (
+                <option key={doc._id} value={doc.doctor_name}>
+                  {doc.doctor_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <div className="pt-4 flex justify-end">
             <button
@@ -208,7 +205,7 @@ const AddTreatment = () => {
               className="primaryBtn flex justify-center items-center gap-2 px-4 py-2"
             >
               <MdSave />
-              Add Treatment
+              Add Discharge
             </button>
           </div>
         </form>
@@ -217,4 +214,4 @@ const AddTreatment = () => {
   );
 };
 
-export default AddTreatment;
+export default AddDischarge;

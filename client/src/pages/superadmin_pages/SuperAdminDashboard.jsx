@@ -203,6 +203,12 @@ const SuperadminDashboard = () => {
                 },
 
                 {
+                  label: "Add Discharge Details",
+                  icon: <FaUserPlus className="text-red-700" />,
+                  path: "/add-discharge",
+                },
+
+                {
                   label: "Add Patient",
                   icon: <FaUserPlus className="text-yellow-900" />,
                   path: "/add-patient",

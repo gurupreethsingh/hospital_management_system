@@ -53,17 +53,17 @@ export default function SingleTreatment() {
           <DetailField
             icon={<FaUserInjured className="text-blue-600" />}
             label="Patient Name"
-            value={treatment.patient_name}
+            value={treatment.patient_id}
           />
           <DetailField
             icon={<FaNotesMedical className="text-indigo-600" />}
             label="Diagnosis"
-            value={treatment.diagnosis}
+            value={treatment.description}
           />
           <DetailField
             icon={<FaMoneyBillWave className="text-yellow-600" />}
             label="Treatment Cost"
-            value={`₹${treatment.treatment_cost}`}
+            value={`₹${treatment.cost}`}
           />
           <DetailField
             icon={<FaCalendarAlt className="text-purple-600" />}
