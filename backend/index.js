@@ -19,15 +19,16 @@ const entityCountRoutes = require("./routes/EntityCountRoutes");
 const contactRoutes = require("./routes/ContactRoutes");
 const blogRoutes = require("./routes/BlogRoutes");
 const subscriptionRoutes = require("./routes/SubscriptionRoutes");
-const patientRoutes=require("./routes/PatientRoutes");
-const medicineRoutes=require("./routes/MedicineRoutes");
-const doctorRoutes=require("./routes/doctorRoutes");
-const bloodRoutes=require("./routes/BloodRoutes");
+const patientRoutes = require("./routes/PatientRoutes");
+const medicineRoutes = require("./routes/MedicineRoutes");
+const doctorRoutes = require("./routes/doctorRoutes");
+const bloodRoutes = require("./routes/BloodRoutes");
 const hospitalRoutes = require("./routes/HospitalRoutes");
-const TreatmentRouter = require('./routes/TreatmentRoute');
+const TreatmentRouter = require("./routes/TreatmentRoute");
 const BookAppointmentRouter = require("./routes/BookAppointmentRoute");
-const PurchaseRouter = require("./routes/PurchaseRoute")
+const PurchaseRouter = require("./routes/PurchaseRoute");
 const PurchaseMedicineRouter = require("./routes/PurchaseMedicineRoute");
+const PediatricRoutes = require("./routes/PediatricRoutes");
 
 dotenv.config();
 
@@ -64,6 +65,7 @@ app.use("/api", TreatmentRouter);
 app.use("/api", BookAppointmentRouter);
 app.use("/api", PurchaseRouter);
 app.use("/api", PurchaseMedicineRouter);
+app.use("/api", PediatricRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -85,7 +87,7 @@ mongoose
   });
 
 // create the port number to run the application
-const PORT = process.env.PORT||3010;
+const PORT = process.env.PORT || 3010;
 app.listen(PORT, () => {
   console.log(`Server is running successfully at port number ${PORT}`);
 });

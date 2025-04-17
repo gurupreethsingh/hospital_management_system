@@ -221,6 +221,12 @@ const SuperadminDashboard = () => {
                 },
 
                 {
+                  label: "Add Pediatric",
+                  icon: <FaUserPlus className="text-red-300" />,
+                  path: "/add-pediatric",
+                },
+
+                {
                   label: "Add Blood",
                   icon: <FaBoxOpen className="text-green-800" />,
                   path: "/add-blood",

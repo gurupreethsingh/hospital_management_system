@@ -44,19 +44,19 @@ const SubscriptionForm = () => {
         Get weekly updates delivered to your inbox.
       </p>
 
-      <form className="relative w-full max-w-md" onSubmit={handleSubmit}>
+      <form className="relative w-full max-w-md " onSubmit={handleSubmit}>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className={`w-full px-5 py-3 pr-32 bg-white/70 text-sm text-gray-900 placeholder-gray-500 rounded border ${
+          className={`w-full px-5 py-3 pr-32 bg-white/70 text-sm text-gray-900 placeholder-gray-500 rounded-pill ${
             error ? "border-red-500" : "border-gray-300"
-          } shadow-md backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
+          } shadow-lg backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
         />
         <button
           type="submit"
-          className="absolute right-1 top-1 bottom-1 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded shadow hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
+          className="absolute right-1 top-1 bottom-1 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded shadow hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 rounded-pill"
         >
           Subscribe
         </button>

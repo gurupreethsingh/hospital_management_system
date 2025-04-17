@@ -78,8 +78,11 @@ import UpdateTreatment from "../../pages/treatment_pages/UpdateTreatment";
 // patient pages.
 import AddPatient from "../../pages/patient_pages/AddPatient";
 
-// discharge pages. 
+// discharge pages.
 import AddDischarge from "../../pages/discharge_pages/AddDischarge";
+
+// pediatric pages.
+import AddPediatric from "../../pages/pediatric_pages/AddPediatric";
 
 const MainLayout = () => {
   return (
@@ -693,13 +696,23 @@ const MainLayout = () => {
             }
           />
 
-
-<Route
+          <Route
             path="/add-discharge"
             element={
               <PrivateRoute allowedRoles={["superadmin", "admin", "doctor"]}>
                 <PageTitle title="Add Discharge">
                   <AddDischarge />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/add-pediatric"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Add Pediatric">
+                  <AddPediatric />
                 </PageTitle>
               </PrivateRoute>
             }
