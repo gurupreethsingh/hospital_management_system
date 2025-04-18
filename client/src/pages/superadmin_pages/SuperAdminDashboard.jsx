@@ -192,6 +192,12 @@ const SuperadminDashboard = () => {
                   path: `/profile/${userId}`,
                 },
                 {
+                  label: "View All Appoitments",
+                  icon: <FaCog className="text-indigo-300" />,
+                  path: `/superadmin-all-appointments`,
+                },
+
+                {
                   label: "Add Hospital",
                   icon: <FaUserPlus className="text-yellow-500" />,
                   path: "/add-hospital",

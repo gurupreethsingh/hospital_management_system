@@ -6,65 +6,59 @@ import {
   FaThLarge,
   FaTh,
   FaTrash,
-  FaStethoscope,
-  FaUserInjured,
-  FaNotesMedical,
-  FaMoneyBillWave,
+  FaUser,
+  FaHospital,
+  FaUserMd,
+  FaCalendarAlt,
+  FaClock,
+  FaClipboardList,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 import globalBackendRoute from "../../config/Config";
 import SearchBar from "../../components/common_components/SearchBar";
 import stopwords from "../../components/common_components/stopwords";
 
-const AllTreatments = () => {
-  const [treatments, setTreatments] = useState([]);
+const AllAppointmentsSuperadmin = () => {
+  const [appointments, setAppointments] = useState([]);
   const [view, setView] = useState("grid");
   const [searchQuery, setSearchQuery] = useState("");
   const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchTreatments = async () => {
+    const fetchAppointments = async () => {
       try {
         const res = await axios.get(
-          `${globalBackendRoute}/api/view-all-treatments`
+          `${globalBackendRoute}/api/superadmin-all-appointments`
         );
-        setTreatments(res.data);
+        setAppointments(res.data);
         setTotalCount(res.data.length);
       } catch (error) {
-        console.error("Error fetching treatments:", error.message);
-        toast.error("Failed to fetch treatment records.");
+        toast.error("Failed to fetch appointment records.");
       }
     };
-    fetchTreatments();
+    fetchAppointments();
   }, []);
 
-  const handleDeleteTreatment = async (id, e) => {
+  const handleDelete = async (id, e) => {
     e.preventDefault();
     e.stopPropagation();
-    const confirm = window.confirm(
-      "Are you sure you want to delete this record?"
-    );
+    const confirm = window.confirm("Are you sure you want to delete this?");
     if (!confirm) return;
 
     try {
-      const res = await axios.delete(
-        `${globalBackendRoute}/api/delete-treatment/${id}`
-      );
-      if (res.status === 200) {
-        setTreatments((prev) => prev.filter((t) => t._id !== id));
-        toast.success("Treatment record deleted successfully.");
-      }
+      await axios.delete(`${globalBackendRoute}/api/delete-appointment/${id}`);
+      setAppointments((prev) => prev.filter((a) => a._id !== id));
+      toast.success("Appointment deleted successfully.");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to delete record.");
+      toast.error("Failed to delete appointment.");
     }
   };
 
   const filtered = searchQuery.trim()
-    ? treatments.filter((t) => {
+    ? appointments.filter((a) => {
         const full =
-          `${t.treatment_name} ${t.patient_name} ${t.diagnosis}`.toLowerCase();
+          `${a.patient_name} ${a.doctor_id?.doctor_name} ${a.reason}`.toLowerCase();
         const words = searchQuery
           .toLowerCase()
           .split(/\s+/)
@@ -73,14 +67,14 @@ const AllTreatments = () => {
           (word) => full.includes(word) || full.includes(word.replace(/s$/, ""))
         );
       })
-    : treatments;
+    : appointments;
 
   return (
     <div className="fullWidth py-10">
       <div className="containerWidth">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
           <h2 className="headingText">
-            All Treatments{" "}
+            All Appointments (Superadmin){" "}
             <span className="text-sm text-gray-500 ml-2">
               Showing {filtered.length} of {totalCount}
             </span>
@@ -107,7 +101,7 @@ const AllTreatments = () => {
             <SearchBar
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search treatments..."
+              placeholder="Search appointments..."
             />
           </div>
         </div>
@@ -125,10 +119,12 @@ const AllTreatments = () => {
                   : "flex flex-col gap-3"
               }
             >
-              {filtered.map((t) => (
+              {filtered.map((a) => (
                 <div
-                  key={t._id}
-                  onClick={() => navigate(`/single-treatment/${t._id}`)}
+                  key={a._id}
+                  onClick={() =>
+                    navigate(`/single-appointment-superadmin/${a._id}`)
+                  }
                   className={`relative cursor-pointer bg-white shadow rounded-lg p-4 hover:shadow-lg transition ${
                     view === "list"
                       ? "flex flex-wrap items-center gap-2 text-sm text-gray-700"
@@ -137,50 +133,63 @@ const AllTreatments = () => {
                 >
                   {view === "list" ? (
                     <>
-                      <span className="text-green-600 font-medium truncate max-w-full">
-                        <FaStethoscope className="inline mr-1" />
-                        {t.treatment_name}
-                      </span>
-                      <span>|</span>
-                      <span className="truncate max-w-full">
-                        <FaUserInjured className="inline mr-1" />
-                        {t.patient_id}
-                      </span>
-                      <span>|</span>
-                      <span className="truncate max-w-full">
-                        <FaNotesMedical className="inline mr-1" />
-                        {t.description}
+                      <span>
+                        <FaUser className="inline mr-1" />
+                        {a.patient_name}
                       </span>
                       <span>|</span>
                       <span>
-                        <FaMoneyBillWave className="inline mr-1" />₹{t.cost}
+                        <FaUserMd className="inline mr-1" />
+                        {a.doctor_id?.doctor_name}
                       </span>
                       <span>|</span>
-                      <span>{t.treatment_date}</span>
+                      <span>
+                        <FaHospital className="inline mr-1" />
+                        {a.hospital_id?.hospital_name}
+                      </span>
+                      <span>|</span>
+                      <span>
+                        <FaCalendarAlt className="inline mr-1" />
+                        {a.appointment_date?.slice(0, 10)}
+                      </span>
+                      <span>|</span>
+                      <span>
+                        <FaClock className="inline mr-1" />
+                        {a.appointment_time}
+                      </span>
+                      <span>|</span>
+                      <span className="capitalize">{a.status}</span>
                     </>
                   ) : (
                     <>
-                      <h3 className="subHeadingTextMobile flex items-center gap-2 mb-1 break-words whitespace-normal w-full">
-                        <FaStethoscope className="text-green-500" />{" "}
-                        {t.treatment_name}
+                      <h3 className="subHeadingTextMobile flex items-center gap-2 mb-1">
+                        <FaUser className="text-blue-500" /> {a.patient_name}
                       </h3>
-                      <p className="paragraphTextMobile flex items-center gap-2 break-words whitespace-normal w-full">
-                        <FaUserInjured /> {t.patient_id}
+                      <p className="paragraphTextMobile flex items-center gap-2">
+                        <FaUserMd /> {a.doctor_id?.doctor_name}
                       </p>
-                      <p className="paragraphTextMobile flex items-center gap-2 break-words whitespace-normal w-full">
-                        <FaNotesMedical /> {t.description}
+                      <p className="paragraphTextMobile flex items-center gap-2">
+                        <FaHospital /> {a.hospital_id?.hospital_name}
                       </p>
-                      <p className="paragraphTextMobile flex items-center gap-2 break-words whitespace-normal w-full">
-                        <FaMoneyBillWave /> ₹{t.cost}
+                      <p className="paragraphTextMobile flex items-center gap-2">
+                        <FaCalendarAlt /> {a.appointment_date?.slice(0, 10)}
                       </p>
-                      <p className="paragraphTextMobile flex items-center gap-2 break-words whitespace-normal w-full">
-                        <FaMoneyBillWave /> {t.treatment_date}
+                      <p className="paragraphTextMobile flex items-center gap-2">
+                        <FaClock /> {a.appointment_time}
+                      </p>
+                      <p className="paragraphTextMobile flex items-center gap-2">
+                        <FaClipboardList /> {a.reason}
+                      </p>
+                      <p className="paragraphTextMobile">
+                        <strong>Status:</strong>{" "}
+                        <span className="capitalize text-indigo-600">
+                          {a.status}
+                        </span>
                       </p>
                     </>
                   )}
-
                   <button
-                    onClick={(e) => handleDeleteTreatment(t._id, e)}
+                    onClick={(e) => handleDelete(a._id, e)}
                     className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full shadow hover:bg-red-600"
                   >
                     <FaTrash />
@@ -195,4 +204,4 @@ const AllTreatments = () => {
   );
 };
 
-export default AllTreatments;
+export default AllAppointmentsSuperadmin;

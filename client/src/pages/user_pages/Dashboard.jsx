@@ -40,6 +40,13 @@ const Dashboard = () => {
 
   const dummyCards = [
     {
+      title: "My Appointment",
+      value: 14,
+      icon: <FaClipboardList className="text-green-500 text-3xl" />,
+      link: "/all-appointments",
+      bgColor: "bg-indigo-100 border border-indigo-300",
+    },
+    {
       title: "My Orders",
       value: 14,
       icon: <FaClipboardList className="text-indigo-600 text-3xl" />,
@@ -123,6 +130,11 @@ const Dashboard = () => {
             <LeftSidebarNav
               navigate={navigate}
               items={[
+                {
+                  label: "Book Appointment",
+                  icon: <FaUser className="text-yellow-600" />,
+                  path: `/book-appointment`,
+                },
                 {
                   label: "My Profile",
                   icon: <FaUser className="text-indigo-600" />,

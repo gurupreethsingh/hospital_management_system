@@ -62,6 +62,7 @@ import AddDoctor from "../../pages/doctor_pages/AddDoctor";
 import AllDoctors from "../../pages/doctor_pages/AllDoctors";
 import SingleDoctor from "../../pages/doctor_pages/SingleDoctor";
 import UpdateDoctor from "../../pages/doctor_pages/UpdateDoctor";
+import AllDoctorAppointments from "../../pages/doctor_pages/AllDoctorAppointments";
 
 // blood pages.
 import AddBlood from "../../pages/blood_pages/AddBlood";
@@ -98,6 +99,15 @@ import AddMortuary from "../../pages/mortuary_pages/AddMortuary";
 import AllMortuaries from "../../pages/mortuary_pages/AllMortuaries";
 import SingleMortuary from "../../pages/mortuary_pages/SingleMortuary";
 import UpdateMortuary from "../../pages/mortuary_pages/UpdateMortuary";
+
+// appointment pages
+import BookAppointment from "../../pages/user_pages/BookAppointment";
+import AllUserAppointments from "../../pages/user_pages/AllUserAppointments";
+import AllAppointmentsSuperadmin from "../../pages/superadmin_pages/AllAppointmentsSuperadmin";
+
+import SingleAppointmentSuperadmin from "../../pages/superadmin_pages/SingleAppointmentSuperadmin";
+
+import UpdateAppointmentSuperadmin from "../../pages/superadmin_pages/UpdateAppointmentSuperadmin";
 
 const MainLayout = () => {
   return (
@@ -175,7 +185,6 @@ const MainLayout = () => {
               </PublicRoute>
             }
           />
-
           <Route
             path="/dashboard"
             element={
@@ -186,11 +195,8 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
           <Route path="/reset-password" element={<ResetPassword />} />
-
           <Route
             path="/superadmin-dashboard"
             element={
@@ -201,6 +207,39 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/superadmin-all-appointments"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="All Appointments Superadmin">
+                  <AllAppointmentsSuperadmin />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-appointment-superadmin/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Appointment">
+                  <SingleAppointmentSuperadmin />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-appointment-superadmin/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Appointment">
+                  <UpdateAppointmentSuperadmin />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
           <Route
             path="/admin-dashboard"
             element={
@@ -221,7 +260,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/delivery-agent-dashboard"
             element={
@@ -232,7 +270,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/hr-dashboard"
             element={
@@ -243,7 +280,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/outlet-dashboard"
             element={
@@ -254,7 +290,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/vendor-dashboard"
             element={
@@ -265,7 +300,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/profile/:id"
             element={
@@ -276,7 +310,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-profile/:id"
             element={
@@ -287,7 +320,27 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
+          {/* appointment routes  */}
+          <Route
+            path="/book-appointment"
+            element={
+              <PrivateRoute>
+                <PageTitle title="Book Appointment">
+                  <BookAppointment />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/all-user-appointments"
+            element={
+              <PrivateRoute>
+                <PageTitle title="All User Appointments">
+                  <AllUserAppointments />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/all-users"
             element={
@@ -298,7 +351,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-user/:id"
             element={
@@ -309,7 +361,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/add-category"
             element={
@@ -320,7 +371,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-categories"
             element={
@@ -331,7 +381,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-category/:id"
             element={
@@ -342,7 +391,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-category-all-products/:id"
             element={
@@ -353,7 +401,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/add-vendor"
             element={
@@ -364,7 +411,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-vendors"
             element={
@@ -375,7 +421,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-vendor/:vendorId"
             element={
@@ -386,7 +431,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/vendor-dashboard/:vendorId"
             element={
@@ -397,7 +441,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/add-outlet"
             element={
@@ -408,7 +451,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-outlets"
             element={
@@ -419,7 +461,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-outlet/:outletId"
             element={
@@ -430,7 +471,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/outlet-dashboard/:outletId"
             element={
@@ -441,9 +481,7 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* blog routes..  */}
-
           <Route
             path="/add-blog"
             element={
@@ -454,7 +492,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-blogs"
             element={
@@ -463,7 +500,6 @@ const MainLayout = () => {
               </PageTitle>
             }
           />
-
           <Route
             path="/single-blog/:id"
             element={
@@ -472,7 +508,6 @@ const MainLayout = () => {
               </PageTitle>
             }
           />
-
           {/* contact routes.  */}
           <Route
             path="/all-messages"
@@ -484,7 +519,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/reply-message/:id"
             element={
@@ -495,7 +529,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-replies"
             element={
@@ -506,7 +539,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* subscription page route */}
           <Route
             path="/all-subscriptions"
@@ -518,7 +550,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* hospital routes */}
           <Route
             path="/add-hospital"
@@ -530,7 +561,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-hospitals"
             element={
@@ -541,7 +571,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-hospital/:id"
             element={
@@ -552,7 +581,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-hospital/:id"
             element={
@@ -563,8 +591,7 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
-          {/* hospital routes */}
+          {/* doctor routes */}
           <Route
             path="/add-doctor"
             element={
@@ -575,7 +602,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-doctors"
             element={
@@ -586,7 +612,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-doctor/:id"
             element={
@@ -597,13 +622,23 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-doctor/:id"
             element={
               <PrivateRoute allowedRoles={["superadmin"]}>
                 <PageTitle title="Update Doctor">
                   <UpdateDoctor />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/doctor-appointments"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Doctor Appointments">
+                  <AllDoctorAppointments />
                 </PageTitle>
               </PrivateRoute>
             }
@@ -620,7 +655,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-bloods"
             element={
@@ -631,7 +665,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-blood/:id"
             element={
@@ -642,7 +675,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-blood/:id"
             element={
@@ -653,7 +685,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* treatment routes */}
           <Route
             path="/add-treatment"
@@ -665,7 +696,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-treatments"
             element={
@@ -676,7 +706,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-treatment/:id"
             element={
@@ -687,7 +716,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-treatment/:id"
             element={
@@ -698,7 +726,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* patients routes */}
           <Route
             path="/add-patient"
@@ -710,7 +737,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-patients"
             element={
@@ -721,7 +747,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-patient/:id"
             element={
@@ -732,7 +757,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-patient/:id"
             element={
@@ -743,7 +767,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* discharge routes */}
           <Route
             path="/add-discharge"
@@ -755,7 +778,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* pediatric routes */}
           <Route
             path="/add-pediatric"
@@ -767,7 +789,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-pediatrics"
             element={
@@ -778,7 +799,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-pediatric/:id"
             element={
@@ -789,7 +809,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-pediatric/:id"
             element={
@@ -800,7 +819,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* mortuary routes */}
           <Route
             path="/add-mortuary"
@@ -812,7 +830,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-mortuary"
             element={
@@ -823,7 +840,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-mortuary/:id"
             element={
@@ -834,7 +850,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-mortuary/:id"
             element={
@@ -845,7 +860,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           {/* discharge routes */}
           <Route
             path="/add-discharge"
@@ -857,7 +871,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/all-discharges"
             element={
@@ -868,7 +881,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/single-discharge/:id"
             element={
@@ -879,7 +891,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/update-discharge/:id"
             element={
@@ -890,7 +901,6 @@ const MainLayout = () => {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/page-not-found"
             element={
