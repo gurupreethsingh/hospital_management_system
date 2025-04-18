@@ -231,6 +231,18 @@ const SuperadminDashboard = () => {
                   icon: <FaBoxOpen className="text-green-800" />,
                   path: "/add-blood",
                 },
+
+                {
+                  label: "Add Discharge Details",
+                  icon: <FaBoxOpen className="text-green-800" />,
+                  path: "/add-discharge",
+                },
+
+                {
+                  label: "Add Mortuary Details",
+                  icon: <FaBoxOpen className="text-green-800" />,
+                  path: "/add-mortuary",
+                },
                 {
                   label: "Add Category",
                   icon: <FaPlus className="text-orange-500" />,

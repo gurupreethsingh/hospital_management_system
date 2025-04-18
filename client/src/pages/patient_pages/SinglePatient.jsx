@@ -1,32 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  FaStethoscope,
   FaUserInjured,
-  FaNotesMedical,
-  FaMoneyBillWave,
-  FaCalendarAlt,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaTransgender,
 } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import globalBackendRoute from "../../config/Config";
 
-export default function SingleTreatment() {
-  const [treatment, setTreatment] = useState(null);
+export default function SinglePatient() {
+  const [patient, setPatient] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`${globalBackendRoute}/api/view-treatment-by-id/${id}`)
-      .then((res) => setTreatment(res.data))
-      .catch((err) => console.error("Error fetching treatment:", err.message));
+    const fetchPatientData = async () => {
+      try {
+        const response = await axios.get(
+          `${globalBackendRoute}/api/view-patient-by-id/${id}`
+        );
+        setPatient(response.data);
+      } catch (error) {
+        console.error("Error fetching patient data:", error.message);
+      }
+    };
+    fetchPatientData();
   }, [id]);
 
-  const handleUpdate = () => navigate(`/update-treatment/${id}`);
+  const handleUpdate = () => {
+    navigate(`/update-patient/${id}`);
+  };
 
-  if (!treatment) return <div className="text-center py-8">Loading...</div>;
+  if (!patient) return <div className="text-center py-8">Loading...</div>;
 
   return (
     <motion.div
@@ -37,39 +45,34 @@ export default function SingleTreatment() {
     >
       <div className="w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h2 className="headingText">Treatment Details</h2>
-          <Link to="/all-treatments">
+          <h2 className="headingText">Patient Details</h2>
+          <Link to="/all-patients">
             <button className="fileUploadBtn text-sm py-1 px-3">
-              View All Treatments
+              View All Patients
             </button>
           </Link>
         </div>
 
         <div className="border-t border-gray-200 divide-y divide-gray-100">
           <DetailField
-            icon={<FaStethoscope className="text-green-600" />}
-            label="Treatment Name"
-            value={treatment.treatment_name}
-          />
-          <DetailField
             icon={<FaUserInjured className="text-blue-600" />}
             label="Patient Name"
-            value={treatment.patient_id}
+            value={patient.patient_name}
           />
           <DetailField
-            icon={<FaNotesMedical className="text-indigo-600" />}
-            label="Diagnosis"
-            value={treatment.description}
+            icon={<FaTransgender className="text-pink-600" />}
+            label="Gender & Age"
+            value={`${patient.gender}, ${patient.age} years`}
           />
           <DetailField
-            icon={<FaMoneyBillWave className="text-yellow-600" />}
-            label="Treatment Cost"
-            value={`₹${treatment.cost}`}
+            icon={<FaPhone className="text-green-600" />}
+            label="Contact Number"
+            value={patient.contact_number}
           />
           <DetailField
-            icon={<FaCalendarAlt className="text-purple-600" />}
-            label="Treatment Date"
-            value={treatment.treatment_date?.slice(0, 10)}
+            icon={<FaMapMarkerAlt className="text-orange-600" />}
+            label="Address"
+            value={patient.address}
           />
         </div>
 

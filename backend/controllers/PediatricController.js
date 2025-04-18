@@ -1,87 +1,159 @@
-const Pediatric = require("../models/PediatricModel");
+const PediatricModel = require("../models/PediatricModel");
 
-// 1. Add Pediatric Record
-exports.addPediatric = async (req, res) => {
+// Create new pediatric record
+const addPediatric = async (req, res) => {
   try {
-    const newPediatric = new Pediatric(req.body);
-    const savedRecord = await newPediatric.save();
-    res.status(201).json(savedRecord);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+    const {
+      child_name,
+      date_of_birth,
+      gender,
+      ward_number,
+      hospital_id,
+      doctor_id,
+      mother_name,
+      father_name,
+      parent_contact,
+    } = req.body;
 
-// 2. Update Ward or Doctor
-exports.updateWardOrDoctor = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { ward_number, doctor_id } = req.body;
+    const existing = await PediatricModel.findOne({ child_name });
+    if (existing)
+      return res
+        .status(400)
+        .json({ message: "Pediatric record already exists." });
 
-    const updated = await Pediatric.findByIdAndUpdate(
-      id,
-      { ward_number, doctor_id },
-      { new: true }
-    );
-
-    res.status(200).json(updated);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// 3. Add Treatment Entry
-exports.addTreatmentEntry = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const treatmentEntry = req.body;
-
-    const pediatric = await Pediatric.findById(id);
-    if (!pediatric) {
-      return res.status(404).json({ message: "Record not found" });
-    }
-
-    pediatric.treatment_records.push(treatmentEntry);
-    await pediatric.save();
-
-    res.status(200).json(pediatric);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// 4. Fetch Child + History
-exports.getPediatricById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const pediatric = await Pediatric.findById(id)
-      .populate("hospital_id", "hospital_name")
-      .populate("doctor_id", "doctor_name specialization");
-
-    if (!pediatric) {
-      return res.status(404).json({ message: "Record not found" });
-    }
-
-    res.status(200).json(pediatric);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-// 5. Search by Parent Contact or Name
-exports.searchByParentInfo = async (req, res) => {
-  try {
-    const { query } = req.query;
-
-    const results = await Pediatric.find({
-      $or: [
-        { mother_name: { $regex: query, $options: "i" } },
-        { father_name: { $regex: query, $options: "i" } },
-        { parent_contact: { $regex: query, $options: "i" } },
-      ],
+    await PediatricModel.create({
+      child_name,
+      date_of_birth,
+      gender,
+      ward_number,
+      hospital_id,
+      doctor_id,
+      mother_name,
+      father_name,
+      parent_contact,
     });
 
-    res.status(200).json(results);
+    res.status(201).json({ message: "Pediatric record created successfully." });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Error creating pediatric record:", error.message);
+    res.status(500).json({ message: "Server error" });
   }
+};
+
+// Get all pediatric records
+const getAllPediatrics = async (req, res) => {
+  try {
+    const all = await PediatricModel.find();
+    res.status(200).json(all);
+  } catch (error) {
+    console.error("Fetch all pediatrics error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get single pediatric record by ID
+const getPediatricById = async (req, res) => {
+  try {
+    const record = await PediatricModel.findById(req.params.id);
+    if (!record) return res.status(404).json({ message: "Record not found" });
+    res.status(200).json(record);
+  } catch (error) {
+    console.error("Fetch pediatric error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Delete pediatric record
+const deletePediatric = async (req, res) => {
+  try {
+    const deleted = await PediatricModel.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: "Record not found" });
+    res.status(200).json({ message: "Pediatric record deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Update pediatric record
+const updatePediatric = async (req, res) => {
+  try {
+    const record = await PediatricModel.findById(req.params.id);
+    if (!record) return res.status(404).json({ message: "Record not found" });
+
+    const fields = [
+      "child_name",
+      "date_of_birth",
+      "gender",
+      "ward_number",
+      "hospital_id",
+      "doctor_id",
+      "mother_name",
+      "father_name",
+      "parent_contact",
+    ];
+
+    fields.forEach((field) => {
+      if (req.body[field]) record[field] = req.body[field];
+    });
+
+    await record.save();
+    res.status(200).json(record);
+  } catch (error) {
+    console.error("Update error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Add treatment entry to a pediatric record
+const addTreatmentEntry = async (req, res) => {
+  try {
+    const record = await PediatricModel.findById(req.params.id);
+    if (!record) return res.status(404).json({ message: "Record not found" });
+
+    const {
+      date,
+      diagnosis,
+      treatment_given,
+      medication_prescribed,
+      follow_up_date,
+      doctor_notes,
+    } = req.body;
+
+    record.treatment_records.push({
+      date: date || new Date(),
+      diagnosis,
+      treatment_given,
+      medication_prescribed,
+      follow_up_date,
+      doctor_notes,
+    });
+
+    await record.save();
+    res.status(200).json({ message: "Treatment entry added", data: record });
+  } catch (error) {
+    console.error("Add treatment error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Count all pediatrics
+const countAllPediatrics = async (req, res) => {
+  try {
+    const count = await PediatricModel.countDocuments();
+    res.status(200).json({ count });
+  } catch (error) {
+    console.error("Count error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = {
+  addPediatric,
+  getAllPediatrics,
+  getPediatricById,
+  deletePediatric,
+  updatePediatric,
+  addTreatmentEntry,
+  countAllPediatrics,
 };

@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-  FaUserMd,
-  FaClipboardCheck,
-  FaBriefcase,
-  FaUserGraduate,
+  FaUserInjured,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaTransgender,
+  FaUserClock,
 } from "react-icons/fa";
 import { MdSave } from "react-icons/md";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import globalBackendRoute from "../../config/Config";
 
-export default function UpdateDoctor() {
+export default function UpdatePatient() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    doctor_name: "",
-    specialization: "",
-    experience_years: "",
-    qualifications: "",
+    patient_name: "",
+    age: "",
+    gender: "",
+    contact_number: "",
+    address: "",
   });
 
   useEffect(() => {
-    const fetchDoctor = async () => {
+    const fetchPatient = async () => {
       try {
         const res = await axios.get(
-          `${globalBackendRoute}/api/view-doctor-by-id/${id}`
+          `${globalBackendRoute}/api/view-patient-by-id/${id}`
         );
         setFormData(res.data);
       } catch (err) {
-        console.error("Error fetching doctor data:", err);
+        console.error("Error fetching patient data:", err);
       }
     };
-    fetchDoctor();
+    fetchPatient();
   }, [id]);
 
   const handleChange = (e) => {
@@ -44,14 +46,14 @@ export default function UpdateDoctor() {
     e.preventDefault();
     try {
       await axios.put(
-        `${globalBackendRoute}/api/update-doctor/${id}`,
+        `${globalBackendRoute}/api/update-patient/${id}`,
         formData
       );
-      alert("Doctor updated successfully!");
-      navigate(`/single-doctor/${id}`);
+      alert("Patient updated successfully!");
+      navigate(`/single-patient/${id}`);
     } catch (err) {
-      console.error("Error updating doctor:", err);
-      alert("Failed to update doctor.");
+      console.error("Error updating patient:", err);
+      alert("Failed to update patient.");
     }
   };
 
@@ -59,41 +61,48 @@ export default function UpdateDoctor() {
     <div className="containerWidth my-6">
       <form onSubmit={handleSubmit} className="w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h2 className="headingText">Update Doctor Details</h2>
-          <Link to="/all-doctors">
+          <h2 className="headingText">Update Patient Details</h2>
+          <Link to="/all-patients">
             <button className="fileUploadBtn text-sm py-1 px-3">
-              View All Doctors
+              View All Patients
             </button>
           </Link>
         </div>
 
         <EditableField
-          label="Doctor Name"
-          name="doctor_name"
-          value={formData.doctor_name}
+          label="Patient Name"
+          name="patient_name"
+          value={formData.patient_name}
           onChange={handleChange}
-          icon={<FaUserMd className="text-green-600" />}
+          icon={<FaUserInjured className="text-blue-600" />}
         />
         <EditableField
-          label="Specialization"
-          name="specialization"
-          value={formData.specialization}
+          label="Age"
+          name="age"
+          value={formData.age}
           onChange={handleChange}
-          icon={<FaClipboardCheck className="text-blue-600" />}
+          icon={<FaUserClock className="text-yellow-600" />}
         />
         <EditableField
-          label="Experience (Years)"
-          name="experience_years"
-          value={formData.experience_years}
+          label="Gender"
+          name="gender"
+          value={formData.gender}
           onChange={handleChange}
-          icon={<FaBriefcase className="text-yellow-600" />}
+          icon={<FaTransgender className="text-pink-600" />}
         />
         <EditableField
-          label="Qualifications"
-          name="qualifications"
-          value={formData.qualifications}
+          label="Contact Number"
+          name="contact_number"
+          value={formData.contact_number}
           onChange={handleChange}
-          icon={<FaUserGraduate className="text-purple-600" />}
+          icon={<FaPhone className="text-green-600" />}
+        />
+        <EditableField
+          label="Address"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          icon={<FaMapMarkerAlt className="text-orange-600" />}
         />
 
         <div className="mt-6 text-center">

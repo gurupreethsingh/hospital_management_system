@@ -8,7 +8,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import { MdSave } from "react-icons/md";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import globalBackendRoute from "../../config/Config";
 
 export default function UpdateTreatment() {
@@ -71,9 +71,14 @@ export default function UpdateTreatment() {
   return (
     <div className="containerWidth my-6">
       <form onSubmit={handleSubmit} className="w-full">
-        <h2 className="subHeadingTextMobile lg:subHeadingText mb-4">
-          Update Treatment Record
-        </h2>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h2 className="headingText">Update Treatment Details</h2>
+          <Link to="/all-treatments">
+            <button className="fileUploadBtn text-sm py-1 px-3">
+              View All Treatments
+            </button>
+          </Link>
+        </div>
 
         {renderField(
           "Treatment Name",

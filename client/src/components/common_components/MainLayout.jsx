@@ -77,12 +77,27 @@ import UpdateTreatment from "../../pages/treatment_pages/UpdateTreatment";
 
 // patient pages.
 import AddPatient from "../../pages/patient_pages/AddPatient";
+import AllPatients from "../../pages/patient_pages/AllPatients";
+import SinglePatient from "../../pages/patient_pages/SinglePatient";
+import UpdatePatient from "../../pages/patient_pages/UpdatePatient";
 
-// discharge pages.
+// Discharge pages.
 import AddDischarge from "../../pages/discharge_pages/AddDischarge";
+import AllDischarges from "../../pages/discharge_pages/AllDischarges";
+import SingleDischarge from "../../pages/discharge_pages/SingleDischarge";
+import UpdateDischarge from "../../pages/discharge_pages/UpdateDischarge";
 
 // pediatric pages.
 import AddPediatric from "../../pages/pediatric_pages/AddPediatric";
+import AllPediatrics from "../../pages/pediatric_pages/AllPediatrics";
+import SinglePediatric from "../../pages/pediatric_pages/SinglePediatric";
+import UpdatePediatric from "../../pages/pediatric_pages/UpdatePediatric";
+
+// Mortuary pages.
+import AddMortuary from "../../pages/mortuary_pages/AddMortuary";
+import AllMortuaries from "../../pages/mortuary_pages/AllMortuaries";
+import SingleMortuary from "../../pages/mortuary_pages/SingleMortuary";
+import UpdateMortuary from "../../pages/mortuary_pages/UpdateMortuary";
 
 const MainLayout = () => {
   return (
@@ -684,7 +699,7 @@ const MainLayout = () => {
             }
           />
 
-          {/* treatment routes */}
+          {/* patients routes */}
           <Route
             path="/add-patient"
             element={
@@ -697,6 +712,40 @@ const MainLayout = () => {
           />
 
           <Route
+            path="/all-patients"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="All Patients">
+                  <AllPatients />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-patient/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Single Patient">
+                  <SinglePatient />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-patient/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin"]}>
+                <PageTitle title="Update Patient">
+                  <UpdatePatient />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* discharge routes */}
+          <Route
             path="/add-discharge"
             element={
               <PrivateRoute allowedRoles={["superadmin", "admin", "doctor"]}>
@@ -707,12 +756,136 @@ const MainLayout = () => {
             }
           />
 
+          {/* pediatric routes */}
           <Route
             path="/add-pediatric"
             element={
               <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
                 <PageTitle title="Add Pediatric">
                   <AddPediatric />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-pediatrics"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="All Pediatrics">
+                  <AllPediatrics />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-pediatric/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Single Pediatric">
+                  <SinglePediatric />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-pediatric/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Update Pediatric">
+                  <UpdatePediatric />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* mortuary routes */}
+          <Route
+            path="/add-mortuary"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Add Mortuary">
+                  <AddMortuary />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-mortuary"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="All Mortuary Records">
+                  <AllMortuaries />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-mortuary/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Single Mortuary Record">
+                  <SingleMortuary />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-mortuary/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Update Mortuary Record">
+                  <UpdateMortuary />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          {/* discharge routes */}
+          <Route
+            path="/add-discharge"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Add Discharge">
+                  <AddDischarge />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/all-discharges"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="All Discharges">
+                  <AllDischarges />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/single-discharge/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Single Discharge">
+                  <SingleDischarge />
+                </PageTitle>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/update-discharge/:id"
+            element={
+              <PrivateRoute allowedRoles={["superadmin", "doctor"]}>
+                <PageTitle title="Update Discharge">
+                  <UpdateDischarge />
                 </PageTitle>
               </PrivateRoute>
             }

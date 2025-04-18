@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
+  FaBaby,
+  FaUser,
+  FaVenusMars,
+  FaPhone,
+  FaMapMarkerAlt,
   FaUserMd,
-  FaClipboardCheck,
-  FaBriefcase,
-  FaUserGraduate,
+  FaHospital,
 } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import globalBackendRoute from "../../config/Config";
 
-export default function SingleDoctor() {
-  const [doctor, setDoctor] = useState(null);
+export default function SinglePediatric() {
+  const [pediatric, setPediatric] = useState(null);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchDoctorData = async () => {
+    const fetchPediatricData = async () => {
       try {
         const response = await axios.get(
-          `${globalBackendRoute}/api/view-doctor-by-id/${id}`
+          `${globalBackendRoute}/api/get-pediatric/${id}`
         );
-        setDoctor(response.data);
+        setPediatric(response.data);
       } catch (error) {
-        console.error("Error fetching doctor data:", error.message);
+        console.error("Error fetching pediatric data:", error.message);
       }
     };
-    fetchDoctorData();
+    fetchPediatricData();
   }, [id]);
 
   const handleUpdate = () => {
-    navigate(`/update-doctor/${id}`);
+    navigate(`/update-pediatric/${id}`);
   };
 
-  if (!doctor) return <div className="text-center py-8">Loading...</div>;
+  if (!pediatric) return <div className="text-center py-8">Loading...</div>;
 
   return (
     <motion.div
@@ -45,34 +48,54 @@ export default function SingleDoctor() {
     >
       <div className="w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-          <h2 className="headingText">Doctor Details</h2>
-          <Link to="/all-doctors">
+          <h2 className="headingText">Pediatric Record</h2>
+          <Link to="/all-pediatrics">
             <button className="fileUploadBtn text-sm py-1 px-3">
-              View All Doctors
+              View All Pediatrics
             </button>
           </Link>
         </div>
 
         <div className="border-t border-gray-200 divide-y divide-gray-100">
           <DetailField
+            icon={<FaBaby className="text-pink-500" />}
+            label="Child Name"
+            value={pediatric.child_name}
+          />
+          <DetailField
+            icon={<FaVenusMars className="text-purple-600" />}
+            label="Gender"
+            value={pediatric.gender}
+          />
+          <DetailField
+            icon={<FaMapMarkerAlt className="text-gray-600" />}
+            label="Ward Number"
+            value={`Ward ${pediatric.ward_number}`}
+          />
+          <DetailField
+            icon={<FaHospital className="text-red-600" />}
+            label="Hospital ID"
+            value={pediatric.hospital_id}
+          />
+          <DetailField
             icon={<FaUserMd className="text-green-600" />}
-            label="Doctor Name"
-            value={doctor.doctor_name}
+            label="Doctor ID"
+            value={pediatric.doctor_id}
           />
           <DetailField
-            icon={<FaClipboardCheck className="text-blue-600" />}
-            label="Specialization"
-            value={doctor.specialization}
+            icon={<FaUser className="text-indigo-600" />}
+            label="Mother Name"
+            value={pediatric.mother_name}
           />
           <DetailField
-            icon={<FaBriefcase className="text-yellow-600" />}
-            label="Experience"
-            value={`${doctor.experience_years} years`}
+            icon={<FaUser className="text-blue-600" />}
+            label="Father Name"
+            value={pediatric.father_name}
           />
           <DetailField
-            icon={<FaUserGraduate className="text-purple-600" />}
-            label="Qualifications"
-            value={doctor.qualifications}
+            icon={<FaPhone className="text-green-600" />}
+            label="Parent Contact"
+            value={pediatric.parent_contact}
           />
         </div>
 

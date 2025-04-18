@@ -36,10 +36,10 @@ const AddPediatric = () => {
     const fetchAllData = async () => {
       try {
         const hospitals = await axios.get(
-          `${globalBackendRoute}/api/get-all-hospitals`
+          `${globalBackendRoute}/api/view-all-hospitals`
         );
         const doctors = await axios.get(
-          `${globalBackendRoute}/api/get-all-doctors`
+          `${globalBackendRoute}/api/view-all-doctors`
         );
         setAllHospitals(hospitals.data);
         setAllDoctors(doctors.data);

@@ -29,6 +29,8 @@ const BookAppointmentRouter = require("./routes/BookAppointmentRoute");
 const PurchaseRouter = require("./routes/PurchaseRoute");
 const PurchaseMedicineRouter = require("./routes/PurchaseMedicineRoute");
 const PediatricRoutes = require("./routes/PediatricRoutes");
+const MortuaryRoutes = require("./routes/MortuaryRoutes");
+const DischargeRoutes = require("./routes/DischargeRoute");
 
 dotenv.config();
 
@@ -66,6 +68,8 @@ app.use("/api", BookAppointmentRouter);
 app.use("/api", PurchaseRouter);
 app.use("/api", PurchaseMedicineRouter);
 app.use("/api", PediatricRoutes);
+app.use("/api", MortuaryRoutes);
+app.use("/api", DischargeRoutes);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

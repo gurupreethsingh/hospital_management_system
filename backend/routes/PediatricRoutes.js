@@ -3,9 +3,11 @@ const router = express.Router();
 const PediatricController = require("../controllers/PediatricController");
 
 router.post("/add-pediatric", PediatricController.addPediatric);
-router.put("/update-pediatric/:id", PediatricController.updateWardOrDoctor);
-router.put("/add-treatment/:id", PediatricController.addTreatmentEntry);
+router.get("/get-all-pediatrics", PediatricController.getAllPediatrics);
 router.get("/get-pediatric/:id", PediatricController.getPediatricById);
-router.get("/search-parent", PediatricController.searchByParentInfo);
+router.put("/update-pediatric/:id", PediatricController.updatePediatric);
+router.delete("/delete-pediatric/:id", PediatricController.deletePediatric);
+router.put("/add-treatment/:id", PediatricController.addTreatmentEntry);
+router.get("/count-all-pediatrics", PediatricController.countAllPediatrics);
 
 module.exports = router;
